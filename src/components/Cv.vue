@@ -1,7 +1,14 @@
 <script lang="ts" setup>
+import { onMounted } from 'vue'
+
 import {
   NGrid, NGridItem
 } from 'naive-ui'
+
+onMounted(() => {
+  document.title = 'CV. Guillermo Valentín Sánchez'
+})
+
 </script>
 
 <template>

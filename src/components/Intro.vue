@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useThrottleFn } from '@vueuse/core'
 import { NButton } from 'naive-ui'
 import { MouseIcon, SquareIcon, PlusIcon, MinusIcon } from 'vue-tabler-icons'
@@ -16,8 +16,32 @@ let startBlockY = 0
 let endBlockX = 0
 let endBlockY = 0
 
+interface GridObject {
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
+  rect: {
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+    isDrawing: boolean;
+  };
+}
 let selectedBlocks = reactive<number[]>([])
-let gridObject = reactive({ startX: 0, startY: 0, endX: 0, endY: 0, rect: typeof rectangle })
+let gridObject: GridObject = reactive({
+  startX: 0,
+  startY: 0,
+  endX: 0,
+  endY: 0,
+  rect: { x: 0, y: 0, w: 0, h: 0, isDrawing: false },
+});
+
+
+onMounted(() => {
+  document.title = 'CV. Guillermo Valentín Sánchez'
+})
 
 
 const handleTouchStart = (event: TouchEvent) => {
@@ -35,7 +59,7 @@ const handleTouchEnd = () => {
 }
 
 
-const handleMouseDown = (event: MouseEvent) => {
+const handleMouseDown = (event: Touch) => {
   if (gridObject.startX == 0 && gridRef.value) {
     const rect = gridRef.value.getBoundingClientRect()
     const x = event.clientX - rect.left
@@ -47,7 +71,7 @@ const handleMouseDown = (event: MouseEvent) => {
 }
 
 
-const handleMouseMove = (event: MouseEvent) => {
+const handleMouseMove = (event: Touch) => {
 
   if (rectangle.isDrawing && gridRef.value && gridObject.startX == 0) {
     const gridWidth = gridRef.value.offsetWidth
