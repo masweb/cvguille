@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/cvguille/',
   plugins: [
     vue(),
   ],
@@ -18,6 +19,7 @@ export default defineConfig({
     hmr: {
       port: 3332,
     },
-  }
+  },
+
 
 })
